@@ -1,0 +1,6 @@
+datago:
+  build: ./
+  ports:
+    - 3010:8080
+  volumes:
+    - ./:/go/src/datago

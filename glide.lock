@@ -1,0 +1,15 @@
+hash: 9ad416886b6e3b35374bc515a40a21414220592ced44de65e0ed0e5e4cf046a4
+updated: 2017-06-28T00:51:34.850201894-03:00
+imports:
+- name: github.com/gorilla/context
+  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+- name: github.com/gorilla/mux
+  version: bcd8bc72b08df0f70df986b97f95590779502d31
+- name: github.com/keighl/metabolize
+  version: 97ab655d403458d6b62b54003d5cf480f379ac5d
+- name: golang.org/x/net
+  version: 455220fa52c866a8aa14ff5e8cc68cde16b8395e
+  subpackages:
+  - html
+  - html/atom
+testImports: []

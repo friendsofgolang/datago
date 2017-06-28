@@ -1,0 +1,9 @@
+package: github.com/friendsofgolang/datago
+import:
+- package: golang.org/x/net
+  subpackages:
+  - html
+- package: github.com/keighl/metabolize
+  version: ^0.1.0
+- package: github.com/gorilla/mux
+  version: ^1.4.0
