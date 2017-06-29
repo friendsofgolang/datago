@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 	m "github.com/keighl/metabolize"
 )
 
@@ -20,19 +22,28 @@ type Data struct {
 }
 
 func main() {
+	router := mux.NewRouter()
+	router.HandleFunc("/", Crawler).Methods("GET")
+	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With"})
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	// start server listen
+	// with error handling
+	log.Fatal(http.ListenAndServe(":8080", handlers.CORS(originsOk, headersOk, methodsOk)(router)))
 
-		url := r.URL.Query().Get("url")
-		res, _ := http.Get(url)
-		data := new(Data)
+}
 
-		err := m.Metabolize(res.Body, data)
-		if err != nil {
-			panic(err)
-		}
+func Crawler(w http.ResponseWriter, r *http.Request) {
 
-		json.NewEncoder(w).Encode(data)
-	})
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	url := r.URL.Query().Get("url")
+	res, _ := http.Get(url)
+	data := new(Data)
+
+	err := m.Metabolize(res.Body, data)
+	if err != nil {
+		panic(err)
+	}
+
+	json.NewEncoder(w).Encode(data)
 }
